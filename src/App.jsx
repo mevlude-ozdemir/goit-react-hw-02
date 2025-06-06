@@ -1,15 +1,22 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Description from "./components/description/Description";
 import Options from "./components/options/Options";
 import Feedback from "./components/feedback/Feedback";
 
+const LOCAL_STORAGE_KEY = "feedbackData";
+
+
 function App() {
-  const [values, setValues] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+
+  const [values, setValues] = useState(() => {
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    return stored ? JSON.parse(stored) : { good: 0, neutral: 0, bad: 0 };
   });
+
+   useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(values));
+  }, [values]);
 
     const updateFeedback = (feedbackType) => {
     setValues(prevValues => ({
@@ -18,9 +25,11 @@ function App() {
     }));
   };
 
-    const resetFeedback = () => {
-    setValues({ good: 0, neutral: 0, bad: 0 });
-  };
+  const resetFeedback = () => {
+  const resetValues = { good: 0, neutral: 0, bad: 0 };
+  setValues(resetValues);
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(resetValues));
+};
 
   const hasFeedback = values.good + values.neutral + values.bad > 0;
 
