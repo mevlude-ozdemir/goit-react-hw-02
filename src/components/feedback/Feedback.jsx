@@ -11,7 +11,7 @@ function Feedback({ good, neutral, bad }) {
     totalFeedback > 0 ? Math.round((good / totalFeedback) * 100) : 0;
 
   return (
-    <div>
+    <div className="feedback">
       <p>Good: {good}</p>
       <p>Neutral: {neutral}</p>
       <p>Bad: {bad}</p>

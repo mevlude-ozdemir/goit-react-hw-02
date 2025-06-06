@@ -1,16 +1,18 @@
-import { useState } from 'react';
 
 
-function Options({ updateFeedback }) {
+
+function Options({ updateFeedback, resetFeedback, hasFeedback }) {
 
 
   return (
-    <div className="optionSection">
+    <div className="options">
 
     <button onClick={() => updateFeedback("good")}>Good</button>
       <button onClick={() => updateFeedback("neutral")}>Neutral</button>
       <button onClick={() => updateFeedback("bad")}>Bad</button>
-      <button >Reset</button>
+      {hasFeedback && (
+        <button onClick={resetFeedback}>Reset</button>
+      )}
    
     </div>
   );
